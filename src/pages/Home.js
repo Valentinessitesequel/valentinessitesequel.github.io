@@ -1,28 +1,29 @@
 import { useEffect, useState } from "react";
+import quotes from "../data/quotes.json";
+import "./Home.css";
+import Note from "../components/Note";
+import jar1 from "../res/jar1.PNG";
 
 const Home = () => {
-	const [quotes, setQuotes] = useState([]);
+	console.log(quotes);
 
-	useEffect(() => {
-		fetch("./quotes.json")
-			.then((response) => response.json())
-			.then((data) => {
-				setQuotes(data);
-				console.log(data);
-			});
-	}, []);
+	const [opened, setOpened] = useState(false);
+	const [year, setYear] = useState(2024);
 
 	return (
-		<div>
-			<h1>Home</h1>
-			<ul>
-				{quotes.map((quote) => (
-					<li key={quote.id}>
-						<blockquote>{quote.quote}</blockquote>
-						<cite>{quote.author}</cite>
-					</li>
-				))}
-			</ul>
+		<div className="container">
+			{opened ? (
+				<Note />
+			) : (
+				<button style={{ border: "none", background: "none" }}>
+					<img
+						src={jar1}
+						onClick={() => setOpened(!opened)}
+						alt="jar"
+						style={{ width: "40%" }}
+					></img>
+				</button>
+			)}
 		</div>
 	);
 };
