@@ -6,7 +6,7 @@ import jar1 from "../res/jar1.PNG";
 import jar2 from "../res/jar2.PNG";
 import jar3 from "../res/jar3.PNG";
 
-const Home = ({ toggleMode }) => {
+const Home = () => {
 	const [opened, setOpened] = useState(false);
 	const [jar, setJar] = useState(jar4);
 	const [noteIndex, setNoteIndex] = useState(0);
@@ -60,7 +60,7 @@ const Home = ({ toggleMode }) => {
 	return (
 		<div className="container">
 			{opened ? (
-				<Note index={noteIndex} />
+				<Note index={noteIndex} setIndex={setNoteIndex} />
 			) : (
 				<button className="jar-container">
 					<img

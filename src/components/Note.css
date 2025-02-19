@@ -12,4 +12,23 @@
 .quote {
 	font-size: 24px;
 	margin: 10px;
+	font-family: "Schoolbell", arial, serif;
+}
+
+.note-button {
+	background-color: #f0f0f0;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 5px 10px;
+	cursor: pointer;
+	margin-top: 10px;
+	width: 200px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.button:disabled {
+	background-color: #e0e0e0;
+	border-color: #aaa;
+	cursor: not-allowed;
 }
