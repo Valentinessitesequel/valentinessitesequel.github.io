@@ -62,8 +62,19 @@ const Note = ({ index, setIndex }) => {
 				prevIndex > 14 ? prevIndex - 1 : prevIndex
 			);
 		} else {
+			let daysInPrevMonth = 0;
+			if (new Date().getMonth() === 0) {
+				daysInPrevMonth = 31;
+			} else {
+				daysInPrevMonth = new Date(
+					new Date().getFullYear(),
+					2,
+					0
+				).getDate();
+			}
+
 			setIndex((prevIndex) =>
-				prevIndex > 0 ? prevIndex - 1 : quotes.length - 1
+				prevIndex > 0 ? prevIndex - 1 : daysInPrevMonth
 			);
 		}
 	};
