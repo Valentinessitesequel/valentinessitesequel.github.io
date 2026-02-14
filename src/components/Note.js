@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import quotes2024 from "../data/quotes.json";
 import quotes2025 from "../data/quotes2025.json";
+import quotes2026 from "../data/quotes2026.json";
 import "./Note.css";
 import blue from "../res/blue.jpg";
 import orange from "../res/orange.jpg";
@@ -11,8 +12,17 @@ import purple from "../res/purple.jpg";
 import cork from "../res/cork.jpg";
 import chalk from "../res/chalk.jpg";
 
+const images = require.context("../res", false, /\.(png|jpe?g|svg|gif|avif)$/);
+const imageMap = images.keys().reduce((acc, path) => {
+	const key = path
+		.replace("./", "")
+		.replace(/\.(png|jpe?g|svg|gif|avif)$/, "");
+	acc[key] = images(path);
+	return acc;
+}, {});
+
 const Note = ({ index, setIndex }) => {
-	const [quotes, setQuotes] = useState(quotes2025);
+	const [quotes, setQuotes] = useState(quotes2026);
 	const quote = quotes[index];
 	const [note, setNote] = useState(blue);
 
@@ -80,10 +90,22 @@ const Note = ({ index, setIndex }) => {
 	};
 
 	const handleToggleYear = () => {
-		if (quotes === quotes2024) {
+		if (quotes === quotes2026) {
 			setQuotes(quotes2025);
-		} else {
+		} else if (quotes === quotes2025) {
 			setQuotes(quotes2024);
+		} else {
+			setQuotes(quotes2026);
+		}
+	};
+
+	const getButtonText = () => {
+		if (quotes === quotes2026) {
+			return "Go to 2025";
+		} else if (quotes === quotes2025) {
+			return "Go to 2024";
+		} else {
+			return "Go to 2026";
 		}
 	};
 
@@ -92,6 +114,15 @@ const Note = ({ index, setIndex }) => {
 			className="quote-container"
 			style={{ backgroundImage: `url(${note})` }}
 		>
+			{quote.image === undefined ? (
+				<></>
+			) : (
+				<img
+					src={imageMap[quote.image]}
+					alt="Quote"
+					className="quote-image"
+				/>
+			)}
 			<p className="quote">{quote.quote}</p>
 			<button
 				onClick={handlePreviousNote}
@@ -101,9 +132,7 @@ const Note = ({ index, setIndex }) => {
 				<p className="quote">Previous Note</p>
 			</button>
 			<button onClick={handleToggleYear} className="note-button">
-				<p className="quote">
-					{quotes === quotes2024 ? "This Year" : "Last Year"}
-				</p>
+				<p className="quote">{getButtonText()}</p>
 			</button>
 		</div>
 	);
